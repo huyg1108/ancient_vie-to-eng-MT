@@ -10,3 +10,8 @@
     ```sh
     python .\extract_function\extract_thivien.py; python .\translate_mordenVNESE_English\translate.py
     ```
+    Or if you want to shutdown after crawing use
+    ```sh
+    python .\extract_function\extract_thivien.py; python .\translate_mordenVNESE_English\translate.py;shutdown /s/f/t 0;
+    ```
+    
