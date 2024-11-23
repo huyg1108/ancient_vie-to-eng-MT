@@ -55,6 +55,7 @@ sub_links = [
 
 total_poem_sentences = 0
 title_number = 0
+print("number of poems: ", len(sub_links))
 
 for i in range(0,len(sub_links)):
     sub_link = sub_links[i]

@@ -23,6 +23,7 @@ import csv
 output_folder = "translate"
 os.makedirs(output_folder, exist_ok=True)
 csv_files = [f for f in os.listdir('./extracted') if f.endswith('.csv')]
+total_poem_sentences = 0
 for file in csv_files:
     df = pd.read_csv(f'./extracted/{file}', header=None)
     df.dropna(inplace=True)
@@ -39,6 +40,7 @@ for file in csv_files:
         ancient_vietnamese_poem = ancient_vietnamese_poems[i]
         english_poem = translate_vi2en(modern_vietnamese_poem)
         data.append([ancient_vietnamese_poem, english_poem])
+        total_poem_sentences += 1
     # write csv file with 2 columns vie,eng
     
     with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
@@ -46,5 +48,5 @@ for file in csv_files:
         csvwriter.writerow(['vie','eng'])
         csvwriter.writerows(data)
 
-
+print(f"Total poems sentence translated: {total_poem_sentences}")
     
