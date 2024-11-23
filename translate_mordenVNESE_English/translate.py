@@ -20,9 +20,11 @@ def translate_vi2en(vi_text: str) -> str:
 import os
 import pandas as pd
 import csv
-csv_files = [f for f in os.listdir('../extract_function/extracted') if f.endswith('.csv')]
+output_folder = "translate"
+os.makedirs(output_folder, exist_ok=True)
+csv_files = [f for f in os.listdir('./extracted') if f.endswith('.csv')]
 for file in csv_files:
-    df = pd.read_csv(f'../extract_function/extracted/{file}', header=None)
+    df = pd.read_csv(f'./extracted/{file}', header=None)
     df.dropna(inplace=True)
     modern_vietnamese_poems = df[2].tolist()
     ancient_vietnamese_poems = df[1].tolist()

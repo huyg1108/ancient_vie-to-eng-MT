@@ -35,8 +35,7 @@ user_agents = [
 # Create the 'extracted' folder if it doesn't exist
 output_folder = "extracted"
 os.makedirs(output_folder, exist_ok=True)
-
-link_web = "https://www.thivien.net/Nguy%E1%BB%85n-Tr%C3%A3i/%E1%BB%A8c-Trai-thi-t%E1%BA%ADp/group-nK0tnLa3M6iVye_Tji5Umg"
+link_web = input("Enter the link of the website you want to extract poems from: ")
 headers = {'User-Agent': random.choice(user_agents)}
 response = requests.get(link_web, headers=headers)
 html_content = response.content.decode()
@@ -44,7 +43,8 @@ soup = BeautifulSoup(html_content, 'html.parser')
 
 poem_group_lists = soup.find_all('div', class_='poem-group-list')
 sub_links = [a['href'] for div in poem_group_lists for a in div.find_all('a', href=True)]
-
+total_poem_sentences = 0
+title_number = 0
 for sub_link in sub_links:
     time.sleep(random.uniform(3, 10))
     headers = {'User-Agent': random.choice(user_agents)}
@@ -64,16 +64,18 @@ for sub_link in sub_links:
             strong_element = h4.find('strong')
             if strong_element:
                 p_elements = h4.find_next_siblings('p')
+                total_poem_sentences += len(p_elements)
                 for p in p_elements:
                     poem_text = p.get_text(separator='\n').strip()
                     lines = poem_text.split('\n')
                     data.append(lines)
 
     # Save the file in the 'extracted' folder
-    file_path = os.path.join(output_folder, header_name + ".csv")
+    title_number += 1
+    file_path = os.path.join(output_folder, str(title_number) + ".csv")
     with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(['Chinese', 'Ancient Vietnamese', 'Current Vietnamese'])
         csvwriter.writerows(data)
-
+print(f"Total poems sentence extracted: {total_poem_sentences}")
 print("Poems have been extracted and saved in the 'extracted' folder.")
