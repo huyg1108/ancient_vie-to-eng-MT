@@ -45,8 +45,9 @@ poem_group_lists = soup.find_all('div', class_='poem-group-list')
 sub_links = [a['href'] for div in poem_group_lists for a in div.find_all('a', href=True)]
 total_poem_sentences = 0
 title_number = 0
-for sub_link in sub_links:
-    time.sleep(random.uniform(3, 10))
+for i in range(144,len(sub_links)):
+    sub_link = sub_links[i]
+    time.sleep(random.uniform(10, 15))
     headers = {'User-Agent': random.choice(user_agents)}
     sub_response = requests.get('https://www.thivien.net/' + sub_link, headers=headers)
     sub_html_content = sub_response.content.decode()
@@ -71,8 +72,7 @@ for sub_link in sub_links:
                     data.append(lines)
 
     # Save the file in the 'extracted' folder
-    title_number += 1
-    file_path = os.path.join(output_folder, str(title_number) + ".csv")
+    file_path = os.path.join(output_folder, str(i) + ".csv")
     with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(['Chinese', 'Ancient Vietnamese', 'Current Vietnamese'])
