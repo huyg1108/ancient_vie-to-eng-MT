@@ -42,9 +42,22 @@ html_content = response.content.decode()
 soup = BeautifulSoup(html_content, 'html.parser')
 
 poem_group_lists = soup.find_all('div', class_='poem-group-list')
-sub_links = [a['href'] for div in poem_group_lists for a in div.find_all('a', href=True)]
+# Extract links that are directly inside the <li> tag (to avoid poet links)
+sub_links = [
+    a['href']
+    for div in poem_group_lists
+    for li in div.find_all('li')
+    for a in li.find_all('a', href=True)
+    if not a.find_parent('span')  # Exclude <a> tags inside <span>
+]
+
+# If you want to further filter by specific patterns in the poem link URL, you could add conditions here.
+
 total_poem_sentences = 0
 title_number = 0
+print(len(sub_links))
+pass
+
 for i in range(0,len(sub_links)):
     sub_link = sub_links[i]
     time.sleep(random.uniform(10, 15))
@@ -72,7 +85,7 @@ for i in range(0,len(sub_links)):
                     data.append(lines)
 
     # Save the file in the 'extracted' folder
-    file_path = os.path.join(output_folder, str(i) + ".csv")
+    file_path = os.path.join(output_folder, str(i + 1) + ".csv")
     with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(['Chinese', 'Ancient Vietnamese', 'Current Vietnamese'])
