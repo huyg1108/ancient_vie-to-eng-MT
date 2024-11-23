@@ -45,7 +45,7 @@ poem_group_lists = soup.find_all('div', class_='poem-group-list')
 sub_links = [a['href'] for div in poem_group_lists for a in div.find_all('a', href=True)]
 total_poem_sentences = 0
 title_number = 0
-for i in range(144,len(sub_links)):
+for i in range(0,len(sub_links)):
     sub_link = sub_links[i]
     time.sleep(random.uniform(10, 15))
     headers = {'User-Agent': random.choice(user_agents)}
