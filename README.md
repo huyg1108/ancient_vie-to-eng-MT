@@ -7,8 +7,15 @@
     cd ./ancient_ViET-to-eng-mt
     ```
 2. Run the extraction and translation scripts:
+    Window
     ```sh
     python .\extract_function\extract_thivien.py; python .\translate_mordenVNESE_English\translate.py
+    ```
+    ```sh
+    MacOS
+    ```sh
+    python .\extract_function\extract_thivien.py; python .\translate_mordenVNESE_English\translate.py
+    ```
     ```
     Or if you want to shutdown after crawing use
     ```sh
