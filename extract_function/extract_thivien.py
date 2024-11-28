@@ -4,7 +4,9 @@ from bs4 import BeautifulSoup
 import time
 import random
 import os
-
+def find_text_in_html(html_content, search_string):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    return soup.find_all(string=search_string)
 # List of user-agents
 user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -57,16 +59,23 @@ total_poem_sentences = 0
 title_number = 0
 print("number of poems: ", len(sub_links))
 
-for i in range(0,len(sub_links)):
+for i in range(372,len(sub_links)):
     sub_link = sub_links[i]
     time.sleep(random.uniform(10, 15))
     headers = {'User-Agent': random.choice(user_agents)}
     sub_response = requests.get('https://www.thivien.net/' + sub_link, headers=headers)
     sub_html_content = sub_response.content.decode()
     sub_soup = BeautifulSoup(sub_html_content, 'html.parser')
-
     header = sub_soup.find('header', class_='page-header')
     header_name = header.find('h1').get_text(strip=True) if header else 'Unknown'
+    # find text "dịch nghĩa" in h4
+    has_mordern_vietnamese = find_text_in_html(sub_html_content, "Dịch nghĩa")
+    if not has_mordern_vietnamese:
+        print(f"Skip extracting poems from '{header_name}' because it doesn't have modern Vietnamese translation.")
+        continue
+    
+    
+        
     print(f"Extracting poems from '{header_name}'...")
     poem_contents = sub_soup.find_all('div', class_='poem-view-alternative')
     data = []

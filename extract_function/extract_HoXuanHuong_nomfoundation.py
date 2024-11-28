@@ -1,5 +1,5 @@
 from requests_html import HTMLSession
-
+import csv
 # Start a session
 session = HTMLSession()
 
@@ -17,7 +17,15 @@ while True:
     # Optionally, find specific elements
     elements = response.html.find('td.alt2')  # Replace with actual class name
     total_sentences += len(elements[0].text.split('\n'))
-    print(i)
-    print(len(elements[0].text.split('\n')))
-    print(total_sentences)
-    print(elements[0].text.split('\n'))
+    output_file = f"extracted/{i}.csv"
+    print(output_file)
+    with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        # write elements[0] to eng column and elements[1] to vie column
+        vie_sentences = elements[1].text.split('\n')
+        eng_sentences = elements[0].text.split('\n')
+        csvwriter.writerow(['vie', 'eng'])
+        data = list(zip(vie_sentences, eng_sentences))
+        csvwriter.writerows(data)
+    
+        
