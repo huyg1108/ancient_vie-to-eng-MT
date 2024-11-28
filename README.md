@@ -13,7 +13,7 @@
     ```
     MacOS
     ```sh
-    python .\extract_function\extract_thivien.py; python .\translate_mordenVNESE_English\translate.py
+    python3 ./extract_function/extract_thivien.py; python3 ./translate_mordenVNESE_English/translate.py
     ```
     
     Or if you want to shutdown after crawing use
