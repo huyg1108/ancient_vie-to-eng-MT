@@ -28,17 +28,17 @@ batch_size = 50
 total_poem_sentences = 0
 
 fake = FakeChatGPTAPI()
-data = []
+
 with open(f'translate.csv', 'w', newline='', encoding='utf-8') as csvfile:
     csvwriter = csv.writer(csvfile)
 for i in range(0, len(modern_vietnamese_poems), batch_size):
     modern_vietnamese_poems_batch = modern_vietnamese_poems[i:i+batch_size]
     ancient_vietnamese_poems_batch = ancient_vietnamese_poems[i:i+batch_size]
-    english = []
     text = ""
     for i in range(len(modern_vietnamese_poems_batch)):
         text += modern_vietnamese_poems_batch[i] + '\n'
     # print(text)
+    data = []
     respond_text = fake.send_request(text)
     english_poem = respond_text.split('\n')
     for i in range(len(english_poem)):
