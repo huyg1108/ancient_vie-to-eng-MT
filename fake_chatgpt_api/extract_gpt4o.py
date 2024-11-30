@@ -24,7 +24,6 @@ ancient_vietnamese_poems = ancient_vietnamese_poems[1:]
 def create_prompt(content):
     return (
         "Translate the following sentences from Vietnamese to English according to the requirements below\n"
-        "- Print each corresponding line (all without punctuation at the end)\n"
         "- Keep exactly the same number of lines in total (if input has 10 lines, output must have 10 lines too)\n"
         "- Only print those lines, do not include any other output or explanation\n"
         "- No diacritics, e.g. \"Lũng\" -> Lung\n"
@@ -33,7 +32,7 @@ def create_prompt(content):
         "- Do not print line numbers before the sentences\n\n"
         f"{content}"
     )
-    
+
 # loop through each 50 lines each time
 batch_size = 50
 total_poem_sentences = 0
