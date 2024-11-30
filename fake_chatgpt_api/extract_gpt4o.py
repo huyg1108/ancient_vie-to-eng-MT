@@ -40,11 +40,10 @@ for i in range(0, len(modern_vietnamese_poems), batch_size):
     respond_text = fake.send_request(text)
     english_poem = respond_text.split('\n')
     for i in range(len(english_poem)):
-        data.append([modern_vietnamese_poems_batch[i], english_poem[i]])
+        data.append([ancient_vietnamese_poems_batch[i], english_poem[i]])
     # total_poem_sentences += 1
     # write csv file with 2 columns vie,eng
 with open(f'translate.csv', 'w', newline='', encoding='utf-8') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(['vie','eng'])
     csvwriter.writerows(data)
-
