@@ -2,7 +2,7 @@ from fake_chatgpt_api import FakeChatGPTAPI
 import os
 import pandas as pd
 import csv
-
+import time
 
 # parent folder of the csv files
 csv_files = [f for f in os.listdir('./extracted') if f.endswith('.csv')]
@@ -21,7 +21,18 @@ ancient_vietnamese_poems = merged_data[1].tolist()
 modern_vietnamese_poems = modern_vietnamese_poems[1:]
 ancient_vietnamese_poems = ancient_vietnamese_poems[1:]
 
-
+def create_prompt(content):
+    return (
+        "Translate the following sentences from Vietnamese to English according to the requirements below\n"
+        "- Print each corresponding line (all without punctuation at the end)\n"
+        "- Keep exactly the same number of lines in total (if input has 10 lines, output must have 10 lines too)\n"
+        "- Only print those lines, do not include any other output or explanation\n"
+        "- No diacritics, e.g. \"Lũng\" -> Lung\n"
+        "- Proper names should be written without diacritics or translated to their English equivalent, e.g. "
+        "\"Thượng Hải\" -> Shanghai, \"Anh Vũ\" -> Anh Vu, or \"Trương Hàn\" -> Truong Han\n"
+        "- Do not print line numbers before the sentences\n\n"
+        f"{content}"
+    )
     
 # loop through each 50 lines each time
 batch_size = 50
@@ -39,7 +50,7 @@ for i in range(0, len(modern_vietnamese_poems), batch_size):
         text += modern_vietnamese_poems_batch[i] + '\n'
     # print(text)
     data = []
-    respond_text = fake.send_request(text)
+    respond_text = fake.send_request(create_prompt(text))
     english_poem = respond_text.split('\n')
     for i in range(len(english_poem)):
         data.append([ancient_vietnamese_poems_batch[i], english_poem[i]])
@@ -50,3 +61,4 @@ for i in range(0, len(modern_vietnamese_poems), batch_size):
         # append the data to the csv file
         csvwriter.writerows(data)
 
+    time.sleep(10)
