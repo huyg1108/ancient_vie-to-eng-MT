@@ -29,6 +29,8 @@ total_poem_sentences = 0
 
 fake = FakeChatGPTAPI()
 data = []
+with open(f'translate.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    csvwriter = csv.writer(csvfile)
 for i in range(0, len(modern_vietnamese_poems), batch_size):
     modern_vietnamese_poems_batch = modern_vietnamese_poems[i:i+batch_size]
     ancient_vietnamese_poems_batch = ancient_vietnamese_poems[i:i+batch_size]
@@ -43,7 +45,8 @@ for i in range(0, len(modern_vietnamese_poems), batch_size):
         data.append([ancient_vietnamese_poems_batch[i], english_poem[i]])
     # total_poem_sentences += 1
     # write csv file with 2 columns vie,eng
-with open(f'translate.csv', 'w', newline='', encoding='utf-8') as csvfile:
-    csvwriter = csv.writer(csvfile)
-    csvwriter.writerow(['vie','eng'])
-    csvwriter.writerows(data)
+    with open(f'translate.csv', 'a', newline='', encoding='utf-8') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        # append the data to the csv file
+        csvwriter.writerows(data)
+
