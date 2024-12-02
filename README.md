@@ -7,7 +7,7 @@
     cd ./ancient_ViET-to-eng-mt
     ```
 2. Run the extraction and translation scripts:
-    Navigate to the main folder and run
+
     ```sh
     python .\extract_function\extract_thivien.py
     ```
