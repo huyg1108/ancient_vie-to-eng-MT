@@ -36,14 +36,6 @@ def create_prompt(content):
         "            2. The smoke rising from the leaves of the trees carries the scent of the wind\n"
         "            3. The shore merges with the peach blossoms and the brocade waves are born\n"
         "    - Only print those lines, do not include any other output or explanation\n"
-        "    - No diacritics (\"Lũng\" -> Lung) and proper names should be written without diacritics or translated to their English equivalent (\"Thượng Hải\" -> Shanghai, \"Anh Vũ\" -> Anh Vu, or \"Trương Hàn\" -> Truong Han)\n"
-        "        - More example:\n"
-        "            + Input:\n"
-        "            1. Bãi trên sông mới truyền lại tên Anh Vũ\n"
-        "            2. Chim anh vũ đã bay về Tây qua núi Lũng\n"
-        "            + Output:\n"
-        "            1. The field on the river was where the name Anh Vu was passed down\n"
-        "            2. The Anh Vu bird has flown west over the Lung mountains\n"
         f"\n{content}"
     )
 
