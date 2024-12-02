@@ -24,12 +24,11 @@ ancient_vietnamese_poems = ancient_vietnamese_poems[1:]
 def create_prompt(content):
     return (
         "Translate the following sentences from Vietnamese to English according to the requirements below\n"
-        "- Keep exactly the same number of lines in total (if input has 10 lines, output must have 10 lines too)\n"
+        "- Keep exactly the same number of lines in total (if input has 50 lines, output must have 50 lines too)\n"
         "- Only print those lines, do not include any other output or explanation\n"
         "- No diacritics, e.g. \"Lũng\" -> Lung\n"
         "- Proper names should be written without diacritics or translated to their English equivalent, e.g. "
         "\"Thượng Hải\" -> Shanghai, \"Anh Vũ\" -> Anh Vu, or \"Trương Hàn\" -> Truong Han\n"
-        "- Do not print line numbers before the sentences\n\n"
         f"{content}"
     )
 
@@ -46,10 +45,10 @@ for i in range(0, len(modern_vietnamese_poems), batch_size):
     ancient_vietnamese_poems_batch = ancient_vietnamese_poems[i:i+batch_size]
     text = ""
     for i in range(len(modern_vietnamese_poems_batch)):
-        text += modern_vietnamese_poems_batch[i] + '\n'
+        text += str(i) + ') ' + modern_vietnamese_poems_batch[i] + '\n'
     # print(text)
     data = []
-    respond_text = fake.send_request(create_prompt(text))
+    respond_text = fake.send_request(text)
     english_poem = respond_text.split('\n')
     for i in range(len(english_poem)):
         data.append([ancient_vietnamese_poems_batch[i], english_poem[i]])
