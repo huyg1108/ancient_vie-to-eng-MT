@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import time
 import random
 import os
+import pyautogui
 def find_text_in_html(html_content, search_string):
     soup = BeautifulSoup(html_content, 'html.parser')
     return soup.find_all(string=search_string)
@@ -38,6 +39,7 @@ user_agents = [
 output_folder = "extracted"
 os.makedirs(output_folder, exist_ok=True)
 link_web = input("Enter the link of the website you want to extract poems from: ")
+shut_down = input("Do you want to shut down the computer after the program finishes? (yes/no) or (Y/N): ")
 headers = {'User-Agent': random.choice(user_agents)}
 response = requests.get(link_web, headers=headers)
 html_content = response.content.decode()
@@ -100,3 +102,8 @@ for i in range(0,len(sub_links)):
         csvwriter.writerows(data)
 print(f"Total poems sentence extracted: {total_poem_sentences}")
 print("Poems have been extracted and saved in the 'extracted' folder.")
+if shut_down.lower() == 'yes' or shut_down.lower() == 'y':
+    pyautogui.hotkey('win', 'r')        
+    pyautogui.typewrite('shutdown /s /t 1')
+    pyautogui.press('enter')
+    
