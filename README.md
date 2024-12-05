@@ -1,27 +1,14 @@
 # Ancient Vietnamese to English Machine Translation
 ## Overview
 
-## How to Run extracts and translates ancient Vietnamese texts to English stimutanously.
+## How to Run extracts thivien poem
 1. Navigate to the main folder:
     ```sh
     cd ./ancient_ViET-to-eng-mt
     ```
 2. Run the extraction and translation scripts:
-    powershell
+
     ```sh
-    python .\extract_function\extract_thivien.py; python .\fake_chatgpt_api\extract_gpt4o.py
-    ```
-    window
-    ```sh
-    python .\extract_function\extract_thivien.py &&  python .\fake_chatgpt_api\extract_gpt4o.py
-    ```
-    MacOS
-    ```sh
-    python3 ./extract_function/extract_thivien.py; python3 ./translate_mordenVNESE_English/translate.py
-    ```
-    
-    Or if you want to shutdown after crawing use
-    ```sh
-    python .\extract_function\extract_thivien.py &&  python .\fake_chatgpt_api\extract_gpt4o && shutdown -s -t 0
+    python .\extract_function\extract_thivien.py
     ```
     
