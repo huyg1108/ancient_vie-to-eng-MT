@@ -60,8 +60,8 @@ sub_links = [
 total_poem_sentences = 0
 title_number = 0
 print("number of poems: ", len(sub_links))
-
-for i in range(0,len(sub_links)):
+start_index = int(input("Enter the start index of the poem you want to extract (0 for the first): "))
+for i in range(start_index, len(sub_links)):
     sub_link = sub_links[i]
     time.sleep(random.uniform(10, 15))
     headers = {'User-Agent': random.choice(user_agents)}
