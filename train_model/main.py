@@ -73,7 +73,7 @@ def main():
             model=model,
             optimizer=optimizer,
             device=device,
-            num_epochs=args.num_epochs,
+            num_epochs=args.epochs,
             patience=args.early_stop_patience,
             save_path=args.output_path + args.ckpt_name
         )

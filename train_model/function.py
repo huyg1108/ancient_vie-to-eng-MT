@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from dataset import *
-from tqdm import tqdm
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 
 def train_model(
     train_dataloader,
@@ -9,9 +9,9 @@ def train_model(
     model,
     optimizer,
     device,
-    num_epochs=3,
-    patience=3,
-    save_path="/kaggle/working/"
+    num_epochs=100,
+    patience=5,
+    save_path='/media02/lttung03/vie-eng-ancient/output/best_model.pth'
 ):
     model.to(device)
 
@@ -23,7 +23,7 @@ def train_model(
         # Training loop
         model.train()
         epoch_loss = 0
-        for batch in tqdm(train_dataloader, desc="Training"):
+        for batch in train_dataloader:
             input_ids = batch["input_ids"].to(device)
             attention_mask = batch["attention_mask"].to(device)
             labels = batch["labels"].to(device)
@@ -48,7 +48,7 @@ def train_model(
         model.eval()
         val_loss = 0
         with torch.no_grad():
-            for batch in tqdm(val_dataloader, desc="Validating"):
+            for batch in val_dataloader:
                 input_ids = batch["input_ids"].to(device)
                 attention_mask = batch["attention_mask"].to(device)
                 labels = batch["labels"].to(device)
@@ -68,7 +68,7 @@ def train_model(
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             epochs_without_improvement = 0
-            torch.save(model.state_dict(), save_path + "best_model.pth")
+            torch.save(model.state_dict(), save_path)
         else:
             epochs_without_improvement += 1
             print(f"No improvement for {epochs_without_improvement} epoch(s).")
@@ -81,15 +81,12 @@ def train_model(
         torch.cuda.empty_cache()
 
 
-from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
-from tqdm import tqdm
-
 def calculate_bleu(test_df, model, tokenizer, device, max_length=64, prefix=""):
     model.eval()  # Set model to evaluation mode
     total_bleu = 0
     # smooth_fn = SmoothingFunction().method4  # Use smoothing to avoid zero BLEU scores
     
-    for index, row in tqdm(test_df.iterrows(), total=len(test_df), desc="Calculating BLEU"):
+    for index, row in test_df.iterrows():
         src = prefix + row['vie']  # Add prefix to the input sentence
         reference = row['eng'].split()  # Reference: English translation (split into words)
         
