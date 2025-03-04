@@ -24,8 +24,8 @@ translate-vietnamese-nom model, we applied back-translation, using two-way trans
 
 We fine-tuned a T5 model on our dataset for sequence-to-sequence translation, optimizing it for Ancient Vietnamese to English translation.
 
-4️⃣ Evaluation & Inference 📊
+### Evaluation & Inference
 
 We evaluated the model using BLEU-4 scores to measure translation quality.
 
-Let me know if you need further refinements! 🚀
+
